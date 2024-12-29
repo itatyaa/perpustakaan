@@ -14,31 +14,46 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     onClose();
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="modal-backdrop">
-      <div className="modal-container">
+    <div
+      className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-all duration-300 ${
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+      }`}
+      style={{ zIndex: 1050 }}
+    >
+      <div
+        className={`bg-white rounded-lg p-6 w-[90%] max-w-md shadow-lg relative transition-transform duration-300 ${
+          isOpen ? "scale-100 translate-y-0" : "scale-95 -translate-y-10"
+        }`}
+      >
         {/* Close Button */}
-        <button className="modal-close" onClick={onClose}>
+        <button
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl"
+          onClick={onClose}
+        >
           ✕
         </button>
 
-        {/* Content */}
-        <h2 className="text-lg font-bold mb-4 text-center text-black">Registrasi akun sebagai</h2>
-        <div className="space-y-4">
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-center mb-6 text-black">
+          Login akun sebagai
+        </h2>
+
+        {/* Buttons */}
+        <div className="flex flex-col gap-4">
           <button
             onClick={() => handleRoleSelection("userUmum")}
-            className="border w-md flex rounded-lg items-center justify-center gap-2 bg-white-600 text-black py-2 px-4 rounded-md hover:bg-green-700"
+            className="flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200"
           >
-            <FaUser /> Umum
+            <FaUser className="text-black" />
+            <span className="text-black font-medium">User Umum</span>
           </button>
           <button
             onClick={() => handleRoleSelection("pegawai")}
-            className="border w-md flex rounded-lg items-center justify-center gap-2 bg-white-600 text-black py-2 px-4 rounded-md hover:bg-green-700"
+            className="flex items-center justify-center gap-2 py-2 px-4 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200"
           >
-            <GrUserWorker />
-            Pegawai
+            <GrUserWorker className="text-black" />
+            <span className="text-black font-medium">Pegawai</span>
           </button>
         </div>
       </div>
