@@ -4,6 +4,7 @@ import LandingPage from './page/auth/LandingPage'
 import LoginForm from "./page/auth/LoginForm";
 import RegistrationForm from "./page/auth/Registrasi"
 import DashboardAdmin from "./page/admin/Dashboard"
+import DataBuku from "./page/feature/dataBuku"
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<RegistrationForm />} />
           <Route path="/dashboard" element={<DashboardAdmin />} />
+          <Route path="/data-buku" element={<DataBuku />} />
           <Route path="*" element={<div><h1>Page Not Found</h1></div>} />
         </Routes>
       </div>

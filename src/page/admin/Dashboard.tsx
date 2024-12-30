@@ -19,36 +19,21 @@ const DashboardAdmin: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchStats = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/dashboard-stats");
+      const data = await response.json();
+      setStats(data);
+    } catch (error) {
+      console.error("Error fetching dashboard stats:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadStats = async () => {
-      try {
-        setIsLoading(true);
-
-        // Dummy data untuk tampilan awal
-        const defaultStats = {
-          totalBooks: 5,
-          totalMembers: 5,
-          activeCirculations: 0,
-          totalCirculations: 5
-        };
-
-        // Set default values karena API tidak disiapkan
-        setStats(defaultStats);
-      } catch (error) {
-        console.error("Error fetching dashboard stats:", error);
-        // Jika terjadi error, tetap set data default
-        setStats({
-          totalBooks: 5,
-          totalMembers: 5,
-          activeCirculations: 0,
-          totalCirculations: 5
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadStats();
+    fetchStats();
   }, []);
 
   const handleNavigation = (path: string) => {
@@ -61,7 +46,6 @@ const DashboardAdmin: React.FC = () => {
       <div className="ml-64 flex-1 bg-gray-100 p-6">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">Dashboard Administrator</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card Buku */}
           <div
             className="bg-blue-600 text-white p-6 rounded-lg shadow-lg hover:bg-blue-700 transition-colors cursor-pointer"
             onClick={() => handleNavigation("/data-buku")}
@@ -76,8 +60,6 @@ const DashboardAdmin: React.FC = () => {
               </>
             )}
           </div>
-
-          {/* Card Anggota */}
           <div
             className="bg-orange-500 text-white p-6 rounded-lg shadow-lg hover:bg-orange-600 transition-colors cursor-pointer"
             onClick={() => handleNavigation("/data-anggota")}
@@ -92,8 +74,6 @@ const DashboardAdmin: React.FC = () => {
               </>
             )}
           </div>
-
-          {/* Card Sirkulasi */}
           <div
             className="bg-green-600 text-white p-6 rounded-lg shadow-lg hover:bg-green-700 transition-colors cursor-pointer"
             onClick={() => handleNavigation("/sirkulasi")}
@@ -108,8 +88,6 @@ const DashboardAdmin: React.FC = () => {
               </>
             )}
           </div>
-
-          {/* Card Laporan */}
           <div
             className="bg-red-600 text-white p-6 rounded-lg shadow-lg hover:bg-red-700 transition-colors cursor-pointer"
             onClick={() => handleNavigation("/laporan")}
