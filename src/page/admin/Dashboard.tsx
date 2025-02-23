@@ -22,7 +22,7 @@ const DashboardAdmin: React.FC = () => {
   const fetchStats = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("/api/dashboard-stats");
+      const response = await fetch("http://localhost:5000/api/dashboard-stats"); // Ubah ke URL backend
       const data = await response.json();
       setStats(data);
     } catch (error) {
@@ -31,6 +31,7 @@ const DashboardAdmin: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchStats();

@@ -51,13 +51,11 @@ const DataBuku: React.FC = () => {
     setNotification('Buku berhasil ditambahkan!');
   };
 
-  // Fungsi untuk hapus buku
   const handleDeleteBook = (isbn: string) => {
     setBookToDelete(isbn);
     setIsConfirmOpen(true);
   };
 
-  // Fungsi untuk konfirmasi penghapusan
   const confirmDeleteBook = () => {
     setBooks(books.filter(book => book.isbn !== bookToDelete));
     setIsConfirmOpen(false);
@@ -65,21 +63,18 @@ const DataBuku: React.FC = () => {
     setNotification('Buku berhasil dihapus!');
   };
 
-  // Hilangkan notifikasi setelah beberapa detik
   useEffect(() => {
     if (notification) {
-      const timer = setTimeout(() => setNotification(null), 3000); // 3 detik
+      const timer = setTimeout(() => setNotification(null), 3000);
       return () => clearTimeout(timer);
     }
   }, [notification]);
 
-  // Hilangkan notifikasi ketika modal ditutup
   const closeModal = () => {
     setIsModalOpen(false);
-    setNotification(null); // Hapus notifikasi ketika modal ditutup
+    setNotification(null); 
   };
 
-  // Fungsi untuk pencarian buku berdasarkan judul
   const filteredBooks = books.filter(book => 
     book.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -103,68 +98,75 @@ const DataBuku: React.FC = () => {
 
             {/* Modal Tambah Buku dengan Transisi */}
             {isModalOpen && (
-              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300">
-                <div className="bg-white p-8 rounded-lg w-1/2 transition-transform transform duration-300 scale-100">
-                  <h2 className="text-xl font-bold mb-4">Tambah Buku Baru</h2>
-                  <input 
-                    type="text" 
-                    placeholder="Judul Buku" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.title}
-                    onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Penulis" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.author}
-                    onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Tahun Terbit" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.year}
-                    onChange={(e) => setNewBook({ ...newBook, year: e.target.value })}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Penerbit" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.publisher}
-                    onChange={(e) => setNewBook({ ...newBook, publisher: e.target.value })}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="Jumlah Halaman" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.pages}
-                    onChange={(e) => setNewBook({ ...newBook, pages: e.target.value })}
-                  />
-                  <input 
-                    type="text" 
-                    placeholder="ISBN" 
-                    className="border p-2 w-full mb-2"
-                    value={newBook.isbn}
-                    onChange={(e) => setNewBook({ ...newBook, isbn: e.target.value })}
-                  />
-                  <div className="flex justify-end gap-2">
-                    <button 
-                      className="px-4 py-2 bg-red-600 text-white rounded-lg" 
-                      onClick={closeModal}
-                    >
-                      Batal
-                    </button>
-                    <button 
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg" 
-                      onClick={handleAddBook}
-                    >
-                      Simpan
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3 }}
+      className="bg-white p-8 rounded-lg w-1/2"
+    >
+      <h2 className="text-xl font-bold mb-4">Tambah Buku Baru</h2>
+      <input 
+        type="text" 
+        placeholder="Judul Buku" 
+        className="border p-2 w-full mb-2"
+        value={newBook.title}
+        onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+      />
+      <input 
+        type="text" 
+        placeholder="Penulis" 
+        className="border p-2 w-full mb-2"
+        value={newBook.author}
+        onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
+      />
+      <input 
+        type="text" 
+        placeholder="Tahun Terbit" 
+        className="border p-2 w-full mb-2"
+        value={newBook.year}
+        onChange={(e) => setNewBook({ ...newBook, year: e.target.value })}
+      />
+      <input 
+        type="text" 
+        placeholder="Penerbit" 
+        className="border p-2 w-full mb-2"
+        value={newBook.publisher}
+        onChange={(e) => setNewBook({ ...newBook, publisher: e.target.value })}
+      />
+      <input 
+        type="text" 
+        placeholder="Jumlah Halaman" 
+        className="border p-2 w-full mb-2"
+        value={newBook.pages}
+        onChange={(e) => setNewBook({ ...newBook, pages: e.target.value })}
+      />
+      <input 
+        type="text" 
+        placeholder="ISBN" 
+        className="border p-2 w-full mb-2"
+        value={newBook.isbn}
+        onChange={(e) => setNewBook({ ...newBook, isbn: e.target.value })}
+      />
+      <div className="flex justify-end gap-2">
+        <button 
+          className="px-4 py-2 bg-red-600 text-white rounded-lg" 
+          onClick={closeModal}
+        >
+          Batal
+        </button>
+        <button 
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg" 
+          onClick={handleAddBook}
+        >
+          Simpan
+        </button>
+      </div>
+    </motion.div>
+  </div>
+)}
+
 
             {/* Popup Konfirmasi Hapus Buku */}
             {isConfirmOpen && (

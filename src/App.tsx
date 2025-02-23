@@ -1,27 +1,30 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LandingPage from './page/auth/LandingPage'
+import LandingPage from "./page/auth/LandingPage";
 import LoginForm from "./page/auth/LoginForm";
-import RegistrationForm from "./page/auth/Registrasi"
-import DashboardAdmin from "./page/admin/Dashboard"
-import DataBuku from "./page/feature/dataBuku"
+import RegistrationForm from "./page/auth/Registrasi";
+import DashboardAdmin from "./page/admin/Dashboard";
+import DataBuku from "./page/admin/dataBuku";
+import DataAnggota from "./page/admin/dataAnggota";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div>
-        <Routes>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<RegistrationForm />} />
 
-          <Route path="/" element={<LandingPage/>} />
-
-          {/* Route untuk halaman Login */}
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/signup" element={<RegistrationForm />} />
+        {/* 🔹 Gunakan ProtectedRoute untuk dashboard */}
+        <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardAdmin />} />
           <Route path="/data-buku" element={<DataBuku />} />
-          <Route path="*" element={<div><h1>Page Not Found</h1></div>} />
-        </Routes>
-      </div>
+          <Route path="/data-anggota" element={<DataAnggota />} />
+        </Route>
+
+        <Route path="*" element={<h1>Page Not Found</h1>} />
+      </Routes>
     </Router>
   );
 };
